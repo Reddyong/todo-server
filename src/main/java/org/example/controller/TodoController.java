@@ -2,9 +2,11 @@ package org.example.controller;
 
 import lombok.AllArgsConstructor;
 import org.example.model.TodoEntity;
+import org.example.model.TodoRequest;
 import org.example.model.TodoResponse;
 import org.example.service.TodoService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,44 +14,57 @@ import java.util.List;
 @CrossOrigin
 @AllArgsConstructor
 @RestController
-@RequestMapping("/ ")
+@RequestMapping("/")
 public class TodoController {
 
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<TodoResponse> create() {
+    public ResponseEntity<TodoResponse> create(@RequestBody TodoRequest request) {
         System.out.println("CREATE");
 
+        if (ObjectUtils.isEmpty(request.getTitle())) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (ObjectUtils.isEmpty(request.getOrder())) {
+            request.setOrder(0L);
+        }
+        if (ObjectUtils.isEmpty(request.getCompleted())) {
+            request.setCompleted(false);
+        }
+
+        TodoEntity result = this.todoService.add(request);
+
+        return ResponseEntity.ok(new TodoResponse(result));
     }
 
     @GetMapping("{id} ")
     public ResponseEntity<TodoResponse> readOne() {
         System.out.println("READ ONE");
-
+        return null;
     }
 
     @GetMapping
     public ResponseEntity<List<TodoResponse>> readAll() {
         System.out.println("READ ALL");
-
+        return null;
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<TodoResponse> update() {
         System.out.println("UPDATE");
-
+        return null;
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete() {
         System.out.println("DELETE");
-
+        return null;
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAll() {
         System.out.println("DELETE ALL");
-
+        return null;
     }
 }
