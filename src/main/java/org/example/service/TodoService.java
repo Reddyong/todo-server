@@ -35,8 +35,19 @@ public class TodoService {
         return this.todoRepository.findAll();
     }
 
-    public TodoEntity updateById(Long id) {
+    public TodoEntity updateById(Long id, TodoRequest request) {
+        TodoEntity todoEntity = this.searchById(id);
+        if (request.getTitle() != null) {
+            todoEntity.setTitle(request.getTitle());
+        }
+        if (request.getOrder() != null) {
+            todoEntity.setOrder(request.getOrder());
+        }
+        if (request.getCompleted() != null) {
+            todoEntity.setCompleted(request.getCompleted());
+        }
 
+        return this.todoRepository.save(todoEntity);
     }
 
     public void deleteById(Long id) {
