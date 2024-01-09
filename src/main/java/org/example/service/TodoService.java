@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import org.example.model.TodoEntity;
 import org.example.model.TodoRequest;
 import org.example.repository.TodoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -24,7 +27,8 @@ public class TodoService {
     }
 
     public TodoEntity searchById(Long id) {
-
+        return this.todoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public List<TodoEntity> searchAll() {
