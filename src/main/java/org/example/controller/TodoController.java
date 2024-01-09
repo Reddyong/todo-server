@@ -66,14 +66,18 @@ public class TodoController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete() {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         System.out.println("DELETE");
-        return null;
+        this.todoService.deleteById(id);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAll() {
         System.out.println("DELETE ALL");
-        return null;
+        this.todoService.deleteAll();
+
+        return ResponseEntity.ok().build();
     }
 }
