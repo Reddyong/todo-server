@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.web;
 
 import lombok.AllArgsConstructor;
 import org.example.model.TodoEntity;
@@ -39,7 +39,7 @@ public class TodoController {
         return ResponseEntity.ok(new TodoResponse(result));
     }
 
-    @GetMapping("{id} ")
+    @GetMapping("{id}")
     public ResponseEntity<TodoResponse> readOne(@PathVariable Long id) {
         System.out.println("READ ONE");
         TodoEntity result = this.todoService.searchById(id);
